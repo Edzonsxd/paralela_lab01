@@ -40,21 +40,22 @@ float func(float x) { return x * x * (x - 9); }
 
 int main(int argc, char *argv[])
 {
+    std::cout << "Montekarlo metodes OpenACC integrācija uz HPC" << "\n";
     size_t points = 1'000;
     const double x[2] = {-1, 10};           // x_min, x_max
     const double y[2] = {-107.794125, 100}; // y_min, y_max
     std::cout << std::fixed << std::setprecision(6);
 
-    while (points < 1'000'000'000)
+    while (points <= 1'000'000'000)
     {
         auto start = high_resolution_clock::now();
         auto integral = montecarlo(func, x[0], x[1], y[0], y[1], points);
         auto end = high_resolution_clock::now();
         auto elapsed = duration_cast<duration<double>>(end - start).count();
         std::cout << "Punktu skaits:\t" << points << "\n";
-        std::cout << "Intervāls:\t" << integral << "\n";
+        std::cout << "Intervāls:\t" << "[" << x[0] << ", " << x[1] << "]" << "\n";
         std::cout << "Integrālis:\t" << integral << "\n";
-        std::cout << "Laiks, ms:\t " << elapsed << "\n";
+        std::cout << "Laiks, s:\t " << elapsed << "\n";
         std::cout << "--------------------------\n";
 
         points *= 10;
